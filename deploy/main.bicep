@@ -7,10 +7,16 @@ param law_sku string
 param law_retentionInDays int
 param law_dailyQuotaGb int
 
+param maps_kind string
+param maps_sku string
+
 module maps './modules/maps.bicep' = {
   name: '${project_name}-maps'
   params: {
+    project_name: project_name
     location: location
+    kind: maps_kind
+    sku: maps_sku
   }
 }
 
