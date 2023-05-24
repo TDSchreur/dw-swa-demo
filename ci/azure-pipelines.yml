@@ -9,9 +9,12 @@ variables:
 stages:
   - stage: ci
     dependsOn: []
+
     jobs:
       - deployment: BuildAndDeploy
         environment: dw-swa-demo
+        workspace:
+          clean: all
         strategy:
           runOnce:
             deploy:
