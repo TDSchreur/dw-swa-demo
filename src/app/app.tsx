@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
+import './app.module.scss';
 
 import ReactWeather from 'react-open-weather';
 import { useApiWeather } from './weather-provider';

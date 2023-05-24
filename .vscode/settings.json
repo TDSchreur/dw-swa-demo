@@ -28,6 +28,7 @@
     },
     "**/dist": true,
     "**/obj": true,
-    "**/bin": true
+    "**/bin": true,
+    "**/__*": true
   }
 }

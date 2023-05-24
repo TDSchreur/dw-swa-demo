@@ -32,7 +32,15 @@ public class GetWeather
     public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
     {
         NameValueCollection query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
-        string coordinates = query["coordinates"] ?? "49.2833329,-123.1200278";
+        string coordinates = query["coordinates"];
+
+        if (string.IsNullOrWhiteSpace(coordinates))
+        {
+            _logger.LogWarning("Coordinates missing from request");
+            return req.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
+        _logger.LogInformation("Getting info for coordinates {Coordinates}", coordinates);
 
         string weatherInfo = await _weatherApiClient.GetWeather(coordinates);
 
@@ -41,6 +49,4 @@ public class GetWeather
         await response.WriteStringAsync(weatherInfo);
         return response;
     }
-
-
 }
