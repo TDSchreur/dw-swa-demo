@@ -1,7 +1,11 @@
 trigger:
   - main
 
-pool: default
+# Bende: https://github.com/microsoft/azure-pipelines-tasks/issues/18242
+# pool: default
+
+pool:
+  vmImage: ubuntu-latest
 
 variables:
   azureServiceConnection: 'azure-sc'

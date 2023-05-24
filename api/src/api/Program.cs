@@ -42,4 +42,3 @@ public static class Program
         await host.RunAsync();
     }
 }
-
