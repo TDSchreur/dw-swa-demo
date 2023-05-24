@@ -6,39 +6,39 @@ pool: default
 variables:
   azureServiceConnection: 'azure-sc'
 
-  stages:
-    - stage: ci
-      dependsOn: []
-      jobs:
-        - deployment: BuildAndDeploy
-          environment: dw-swa-demo
-          strategy:
-            runOnce:
-              deploy:
-                steps:
-                  - checkout: self
+stages:
+  - stage: ci
+    dependsOn: []
+    jobs:
+      - deployment: BuildAndDeploy
+        environment: dw-swa-demo
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
 
-                  - task: AzureCLI@2
-                    displayName: Biceps deployment via CLI
-                    inputs:
-                      azureSubscription: $(azureServiceConnection)
-                      scriptLocation: 'inlineScript'
-                      scriptType: bash
-                      inlineScript: |
-                        az config set bicep.use_binary_from_path=False
-                        az bicep install
+                - task: AzureCLI@2
+                  displayName: Biceps deployment via CLI
+                  inputs:
+                    azureSubscription: $(azureServiceConnection)
+                    scriptLocation: 'inlineScript'
+                    scriptType: bash
+                    inlineScript: |
+                      az config set bicep.use_binary_from_path=False
+                      az bicep install
 
-                        az deployment group create -n dw-swa-demo -g dw-swa-demo -f $(Build.SourcesDirectory)/deploy/main.bicep -p $(Build.SourcesDirectory)/deploy/parameters.json
+                      az deployment group create -n dw-swa-demo -g dw-swa-demo -f $(Build.SourcesDirectory)/deploy/main.bicep -p $(Build.SourcesDirectory)/deploy/parameters.json
 
-                        deployment_token=$(az deployment group show --resource-group dw-swa-demo -n dw-demo-swa --query properties.outputs.deployment_token.value | tr -d '"')
-                        echo "deployment token is $deployment_token"
-                        echo "##vso[task.setvariable variable=deployment_token;issecret=true]$deployment_token"
+                      deployment_token=$(az deployment group show --resource-group dw-swa-demo -n dw-demo-swa --query properties.outputs.deployment_token.value | tr -d '"')
+                      echo "deployment token is $deployment_token"
+                      echo "##vso[task.setvariable variable=deployment_token;issecret=true]$deployment_token"
 
-                  - task: AzureStaticWebApp@0
-                    displayName: Build and deploy SWA
-                    inputs:
-                      app_location: /
-                      app_build_command: yarn nx build
-                      api_location: /api
-                      output_location: dist/dw-swa-demo
-                      azure_static_web_apps_api_token: $(deployment_token)
+                - task: AzureStaticWebApp@0
+                  displayName: Build and deploy SWA
+                  inputs:
+                    app_location: /
+                    app_build_command: yarn nx build
+                    api_location: /api
+                    output_location: dist/dw-swa-demo
+                    azure_static_web_apps_api_token: $(deployment_token)
