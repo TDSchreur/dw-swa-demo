@@ -7,9 +7,9 @@ public static class Program
 {
     public static async Task Main()
     {
-        var host = new HostBuilder()
-            .ConfigureFunctionsWorkerDefaults()
-            .Build();
+        IHost host = new HostBuilder()
+                    .ConfigureFunctionsWorkerDefaults()
+                    .Build();
 
         await host.RunAsync();
     }

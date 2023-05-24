@@ -13,11 +13,12 @@
         "order": 1
       }
     },
+
     {
-      "name": "Attach to .NET Functions",
-      "type": "coreclr",
+      "name": "Attach function",
       "request": "attach",
-      "processId": "${command:azureFunctions.pickProcess}",
+      "type": "coreclr",
+      "processName": "func",
       "presentation": {
         "hidden": true,
         "group": "",
@@ -28,7 +29,7 @@
   "compounds": [
     {
       "name": "Launch Static Web App",
-      "configurations": ["Attach to .NET Functions", "Launch Edge"],
+      "configurations": ["Launch Edge", "Attach function"],
       "stopAll": true,
       "preLaunchTask": "swa start"
     }
