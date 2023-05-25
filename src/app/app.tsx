@@ -26,8 +26,6 @@ export function App() {
         lon: `${long}`,
         location: 'Current location',
       });
-
-      console.log(`lat: ${lat} long: ${long}`);
     });
   };
 
@@ -40,21 +38,14 @@ export function App() {
     });
   };
 
-  const myLocationLink = (
-    <div>
-      <button onClick={setLocation} style={{ cursor: 'pointer' }}>
-        Use my location
-      </button>
-    </div>
-  );
-
-  const goudaLocation = (
-    <div>
-      <button onClick={setGouda} style={{ cursor: 'pointer' }}>
-        Back to Gouda
-      </button>
-    </div>
-  );
+  const setMelbourne = () => {
+    setState({
+      ...state,
+      lat: '-37.92554987559496',
+      lon: '144.92482270804211',
+      location: 'Melbourne',
+    });
+  };
 
   return (
     <div className="app">
@@ -67,8 +58,17 @@ export function App() {
         unitsLabels={{ temperature: 'C', windSpeed: 'Km/h' }}
         showForecast
       />
-      {myLocationLink}
-      {goudaLocation}
+      <div>
+        <button onClick={setLocation} style={{ cursor: 'pointer' }}>
+          My location
+        </button>
+        <button onClick={setGouda} style={{ cursor: 'pointer' }}>
+          Gouda
+        </button>
+        <button onClick={setMelbourne} style={{ cursor: 'pointer' }}>
+          Melbourne
+        </button>
+      </div>
       <h1>{errorMessage}</h1>
       <h2>Lat : {state.lat}</h2>
       <h2>Long: {state.lon}</h2>

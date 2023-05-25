@@ -35,7 +35,7 @@ stages:
                       az config set bicep.use_binary_from_path=False
                       az bicep install
 
-                      az deployment group create -n dw-swa-demo -g dw-swa-demo -f $(Build.SourcesDirectory)/deploy/main.bicep -p $(Build.SourcesDirectory)/deploy/parameters.json
+                      az deployment group create -n dw-swa-demo -g dw-swa-demo -f $(Build.SourcesDirectory)/deploy/main.bicep -p $(Build.SourcesDirectory)/deploy/parameters.json -p clientsecret=$(CLIENTSECRET)
 
                       deployment_token=$(az deployment group show --resource-group dw-swa-demo -n dw-demo-swa --query properties.outputs.deployment_token.value | tr -d '"')
                       echo "deployment token is $deployment_token"

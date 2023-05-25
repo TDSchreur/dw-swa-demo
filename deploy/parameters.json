@@ -19,6 +19,9 @@
     },
     "maps_sku": {
       "value": "G2"
+    },
+    "clientid": {
+      "value": "44c1baee-bd73-4ecf-af5e-1de7e0a302fe"
     }
   }
 }

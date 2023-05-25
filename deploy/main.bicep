@@ -10,6 +10,10 @@ param law_dailyQuotaGb int
 param maps_kind string
 param maps_sku string
 
+param clientid string
+@secure()
+param clientsecret string
+
 module maps './modules/maps.bicep' = {
   name: '${project_name}-maps'
   params: {
@@ -41,5 +45,7 @@ module swa './modules/swa.bicep' = {
     sku: swa_sku
     application_insights_instrumentation_key: ai.outputs.instrumentationKey
     application_insights_connection_string: ai.outputs.connectionString
+    clientid: clientid
+    clientsecret: clientsecret
   }
 }
