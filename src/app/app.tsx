@@ -4,24 +4,25 @@ import './app.module.scss';
 import ReactWeather from 'react-open-weather';
 import { useApiWeather } from './weather-provider';
 import { useState } from 'react';
+import Me from 'src/me.';
 
 export function App() {
-  const [state, setState] = useState({
+  const [location, setLocationState] = useState({
     lat: '52.0216522',
     lon: '4.6794943',
     location: 'Gouda - Tielweg 16',
     lang: 'en',
   });
 
-  const { data, isLoading, errorMessage } = useApiWeather(state);
+  const { data, isLoading, errorMessage } = useApiWeather(location);
 
   const setLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
 
-      setState({
-        ...state,
+      setLocationState({
+        ...location,
         lat: `${lat}`,
         lon: `${long}`,
         location: 'Current location',
@@ -30,8 +31,8 @@ export function App() {
   };
 
   const setGouda = () => {
-    setState({
-      ...state,
+    setLocationState({
+      ...location,
       lat: '52.0216522',
       lon: '4.6794943',
       location: 'Gouda - Tielweg 16',
@@ -39,8 +40,8 @@ export function App() {
   };
 
   const setMelbourne = () => {
-    setState({
-      ...state,
+    setLocationState({
+      ...location,
       lat: '-37.92554987559496',
       lon: '144.92482270804211',
       location: 'Melbourne',
@@ -54,7 +55,7 @@ export function App() {
         errorMessage={errorMessage}
         data={data}
         lang="en"
-        locationLabel={state.location}
+        locationLabel={location.location}
         unitsLabels={{ temperature: 'C', windSpeed: 'Km/h' }}
         showForecast
       />
@@ -70,8 +71,9 @@ export function App() {
         </button>
       </div>
       <h1>{errorMessage}</h1>
-      <h2>Lat : {state.lat}</h2>
-      <h2>Long: {state.lon}</h2>
+      <h2>Lat : {location.lat}</h2>
+      <h2>Long: {location.lon}</h2>
+      <Me />
     </div>
   );
 }
