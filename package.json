@@ -13,7 +13,8 @@
     "axios": "^1.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-open-weather": "^1.3.2"
+    "react-open-weather": "^1.3.2",
+    "react-router-dom": "^6.11.2"
   },
   "devDependencies": {
     "@nx/cypress": "16.2.2",

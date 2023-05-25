@@ -5,9 +5,13 @@
       "allowedRoles": ["authenticated"]
     }
   ],
+  "navigationFallback": {
+    "rewrite": "index.html",
+    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
+  },
   "responseOverrides": {
     "401": {
-      "redirect": "/.auth/login/aad",
+      "redirect": "/.auth/login/aad?post_login_redirect_uri=.referrer",
       "statusCode": 302
     }
   },
