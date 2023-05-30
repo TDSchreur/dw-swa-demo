@@ -13,10 +13,6 @@ param maps_sku string
 param func_sku_name string
 param func_sku_tier string
 
-param clientid string
-@secure()
-param clientsecret string
-
 module maps './modules/maps.bicep' = {
   name: '${project_name}-maps'
   params: {
@@ -59,8 +55,6 @@ module swa './modules/swa.bicep' = {
     sku: swa_sku
     application_insights_instrumentation_key: ai.outputs.instrumentationKey
     application_insights_connection_string: ai.outputs.connectionString
-    clientid: clientid
-    clientsecret: clientsecret
     functionAppid: func.outputs.functionAppId
   }
 }
