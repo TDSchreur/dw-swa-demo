@@ -45,6 +45,7 @@ module func 'modules/func.bicep' = {
     location: location
     application_insights_instrumentation_key: ai.outputs.instrumentationKey
     application_insights_connection_string: ai.outputs.connectionString
+    mapskey: maps.outputs.primaryKey
     sku_name: func_sku_name
     sku_tier: func_sku_tier
   }
@@ -55,7 +56,6 @@ module swa './modules/swa.bicep' = {
   params: {
     project_name: project_name
     location: location
-    mapskey: maps.outputs.primaryKey
     sku: swa_sku
     application_insights_instrumentation_key: ai.outputs.instrumentationKey
     application_insights_connection_string: ai.outputs.connectionString

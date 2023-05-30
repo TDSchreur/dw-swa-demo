@@ -2,6 +2,7 @@ param project_name string
 param location string
 param application_insights_instrumentation_key string
 param application_insights_connection_string string
+param mapskey string
 param sku_name string
 param sku_tier string
 
@@ -65,6 +66,7 @@ resource functionApp 'Microsoft.Web/sites@2018-11-01' = {
       WEBSITE_CONTENTSHARE: toLower(function_name)
       APPINSIGHTS_INSTRUMENTATIONKEY: application_insights_instrumentation_key
       APPLICATIONINSIGHTS_CONNECTION_STRING: application_insights_connection_string
+      MapsKey: mapskey
     }
   }
 }
