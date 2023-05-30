@@ -48,7 +48,7 @@ resource functionApp 'Microsoft.Web/sites@2018-11-01' = {
   properties: {
     serverFarmId: hostingPlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET|7.0'
+      linuxFxVersion: 'DOTNET-ISOLATED|7.0'
       ftpsState: 'FtpsOnly'
       minTlsVersion: '1.2'
     }
