@@ -59,7 +59,7 @@ resource functionApp 'Microsoft.Web/sites@2018-11-01' = {
     properties: {
       AzureWebJobsStorage: 'DefaultEndpointsProtocol=https;AccountName=${storage_name};EndpointSuffix=${az.environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
       WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: 'DefaultEndpointsProtocol=https;AccountName=${storage_name};EndpointSuffix=${az.environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
-      FUNCTIONS_WORKER_RUNTIME: 'dotnet'
+      FUNCTIONS_WORKER_RUNTIME: 'dotnet-isolated'
       FUNCTIONS_EXTENSION_VERSION: '~4'
       WEBSITE_RUN_FROM_PACKAGE: '1'
       WEBSITE_CONTENTSHARE: toLower(function_name)
