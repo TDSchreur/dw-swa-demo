@@ -33,14 +33,6 @@ resource swa 'Microsoft.Web/staticSites@2021-01-15' = {
       GITHUB_CLIENT_SECRET: clientsecret
     }
   }
-
-  // resource symbolicname 'linkedBackends@2022-03-01' = {
-  //   name: 'function-backend'
-  //   properties: {
-  //     backendResourceId: functionAppid
-  //     region: location
-  //   }
-  // }
 }
 
 output identity string = swa.identity.principalId

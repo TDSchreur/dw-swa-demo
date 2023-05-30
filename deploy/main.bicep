@@ -41,7 +41,6 @@ module swa './modules/swa.bicep' = {
     project_name: project_name
     location: location
     mapskey: maps.outputs.primaryKey
-    // functionAppid: func.outputs.functionAppId
     sku: swa_sku
     application_insights_instrumentation_key: ai.outputs.instrumentationKey
     application_insights_connection_string: ai.outputs.connectionString
