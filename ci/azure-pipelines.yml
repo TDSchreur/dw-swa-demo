@@ -42,7 +42,7 @@ stages:
                       echo "##vso[task.setvariable variable=deployment_token;issecret=true]$deployment_token"
 
                 - task: UseDotNet@2
-                  displayName: 'Install .NET 6.x SDK'
+                  displayName: 'Install .NET 7.x SDK'
                   inputs:
                     version: '7.x'
 
@@ -51,7 +51,6 @@ stages:
                   inputs:
                     command: 'restore'
                     projects: '$(apiproject)'
-                    feedsToUse: config
 
                 - task: DotNetCoreCLI@2
                   displayName: 'Build function'
