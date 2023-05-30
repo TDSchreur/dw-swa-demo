@@ -9,7 +9,7 @@ pool:
 
 variables:
   azureServiceConnection: 'azure-sc'
-
+  apiproject: 'api/src/api/api.csproj'
 stages:
   - stage: ci
     dependsOn: []
@@ -41,11 +41,51 @@ stages:
                       echo "deployment token is $deployment_token"
                       echo "##vso[task.setvariable variable=deployment_token;issecret=true]$deployment_token"
 
+                - task: UseDotNet@2
+                  displayName: 'Install .NET 6.x SDK'
+                  inputs:
+                    version: '7.x'
+
+                - task: DotNetCoreCLI@2
+                  displayName: 'Restore nuget packages'
+                  inputs:
+                    command: 'restore'
+                    projects: '$(apiproject)'
+                    feedsToUse: config
+
+                - task: DotNetCoreCLI@2
+                  displayName: 'Build function'
+                  inputs:
+                    command: 'build'
+                    arguments: '--no-restore --configuration release'
+                    projects: $(apiproject)
+
+                - task: DotNetCoreCLI@2
+                  displayName: 'Publish function'
+                  inputs:
+                    command: 'publish'
+                    arguments: '--no-restore --no-build --configuration release --output $(Build.ArtifactStagingDirectory)/function'
+                    projects: $(apiproject)
+                    publishWebProjects: false
+                    zipAfterPublish: true
+
+                - task: AzureFunctionApp@2
+                  displayName: 'Deploy Function App'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: functionAppLinux
+                    appName: 'func-dw-demo'
+                    runtimeStack: 'DOTNET-ISOLATED|7.0'
+                    deploymentMethod: runFromPackage
+                    resourceGroupName: 'dw-swa-demo'
+                    package: '$(Build.ArtifactStagingDirectory)/function/api.zip'
+
                 - task: AzureStaticWebApp@0
                   displayName: Build and deploy SWA
                   inputs:
                     app_location: /
                     app_build_command: yarn nx build
-                    api_location: /api
+                    # leeg want byof
+                    api_location: ''
                     output_location: dist/dw-swa-demo
                     azure_static_web_apps_api_token: $(deployment_token)

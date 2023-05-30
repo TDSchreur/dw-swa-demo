@@ -22,6 +22,12 @@
     },
     "clientid": {
       "value": "c15a14846ab130701936"
+    },
+    "func_sku_name": {
+      "value": "Y1"
+    },
+    "func_sku_tier": {
+      "value": "Dynamic"
     }
   }
 }

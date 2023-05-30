@@ -1,7 +1,7 @@
 param project_name string
 param location string
 param sku string
-// param functionAppid string
+param functionAppid string
 param mapskey string
 param application_insights_instrumentation_key string
 param application_insights_connection_string string
@@ -31,6 +31,14 @@ resource swa 'Microsoft.Web/staticSites@2021-01-15' = {
       MapsKey: mapskey
       GITHUB_CLIENT_ID: clientid
       GITHUB_CLIENT_SECRET: clientsecret
+    }
+  }
+
+  resource symbolicname 'linkedBackends@2022-03-01' = {
+    name: 'function-backend'
+    properties: {
+      backendResourceId: functionAppid
+      region: location
     }
   }
 }
