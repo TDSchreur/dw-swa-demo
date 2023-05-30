@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace api;
 
@@ -22,13 +20,6 @@ public class GetWeather
     }
 
     [Function("GetWeather")]
-    [OpenApiOperation("GetWeather")]
-    [OpenApiParameter("coordinates", In = ParameterLocation.Query)]
-    [OpenApiResponseWithBody(HttpStatusCode.OK,
-                             "text/plain",
-                             typeof(string),
-                             Summary = "The response",
-                             Description = "This returns the response")]
     public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
     {
         NameValueCollection query = HttpUtility.ParseQueryString(req.Url.Query);
