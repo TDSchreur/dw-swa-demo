@@ -10,9 +10,8 @@ param law_dailyQuotaGb int
 param maps_kind string
 param maps_sku string
 
-param clientid string
-@secure()
-param clientsecret string
+param func_sku_name string
+param func_sku_tier string
 
 module maps './modules/maps.bicep' = {
   name: '${project_name}-maps'
@@ -35,16 +34,27 @@ module ai './modules/ai.bicep' = {
   }
 }
 
+module func 'modules/func.bicep' = {
+  name: '${project_name}-func'
+  params: {
+    project_name: project_name
+    location: location
+    application_insights_instrumentation_key: ai.outputs.instrumentationKey
+    application_insights_connection_string: ai.outputs.connectionString
+    mapskey: maps.outputs.primaryKey
+    sku_name: func_sku_name
+    sku_tier: func_sku_tier
+  }
+}
+
 module swa './modules/swa.bicep' = {
   name: '${project_name}-swa'
   params: {
     project_name: project_name
     location: location
-    mapskey: maps.outputs.primaryKey
     sku: swa_sku
     application_insights_instrumentation_key: ai.outputs.instrumentationKey
     application_insights_connection_string: ai.outputs.connectionString
-    clientid: clientid
-    clientsecret: clientsecret
+    functionAppid: func.outputs.functionAppId
   }
 }

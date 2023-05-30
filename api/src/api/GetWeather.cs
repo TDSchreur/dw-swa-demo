@@ -1,12 +1,10 @@
 using System.Collections.Specialized;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace api;
 
@@ -22,16 +20,9 @@ public class GetWeather
     }
 
     [Function("GetWeather")]
-    [OpenApiOperation(operationId: "GetWeather")]
-    [OpenApiParameter("coordinates", In = ParameterLocation.Query)]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK,
-                             contentType: "text/plain",
-                             bodyType: typeof(string),
-                             Summary = "The response",
-                             Description = "This returns the response")]
-    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
+    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
     {
-        NameValueCollection query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+        NameValueCollection query = HttpUtility.ParseQueryString(req.Url.Query);
         string coordinates = query["coordinates"];
 
         if (string.IsNullOrWhiteSpace(coordinates))

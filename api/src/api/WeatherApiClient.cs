@@ -6,8 +6,8 @@ namespace api;
 
 public class WeatherApiClient
 {
-    private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
+    private readonly HttpClient _httpClient;
 
     public WeatherApiClient(HttpClient httpClient, IConfiguration configuration)
     {
@@ -18,7 +18,8 @@ public class WeatherApiClient
     public async Task<string> GetWeather(string coordinates)
     {
         string key = _configuration["MapsKey"];
-        HttpRequestMessage httpRequestMessage = new(HttpMethod.Get, $"https://atlas.microsoft.com/weather/currentConditions/json?query={coordinates}");
+        HttpRequestMessage httpRequestMessage =
+            new(HttpMethod.Get, $"https://atlas.microsoft.com/weather/currentConditions/json?query={coordinates}");
         httpRequestMessage.Headers.Add("api-version", "1.0");
         httpRequestMessage.Headers.Add("subscription-key", key);
 
