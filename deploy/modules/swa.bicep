@@ -5,9 +5,6 @@ param sku string
 param mapskey string
 param application_insights_instrumentation_key string
 param application_insights_connection_string string
-param clientid string
-@secure()
-param clientsecret string
 
 var name = 'swa-${project_name}'
 
@@ -29,8 +26,6 @@ resource swa 'Microsoft.Web/staticSites@2021-01-15' = {
       APPINSIGHTS_INSTRUMENTATIONKEY: application_insights_instrumentation_key
       APPLICATIONINSIGHTS_CONNECTION_STRING: application_insights_connection_string
       MapsKey: mapskey
-      GITHUB_CLIENT_ID: clientid
-      GITHUB_CLIENT_SECRET: clientsecret
     }
   }
 }
