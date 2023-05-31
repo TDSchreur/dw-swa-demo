@@ -1,9 +1,8 @@
+using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
 
 namespace api;
 
@@ -13,30 +12,29 @@ public static class Program
     {
         IHost host = new HostBuilder()
                     .ConfigureFunctionsWorkerDefaults(builder =>
-                    {
-                        builder.UseNewtonsoftJson()
-                              .AddApplicationInsights()
-                              .AddApplicationInsightsLogger();
-                    })
+                     {
+                         builder.AddApplicationInsights()
+                                .AddApplicationInsightsLogger();
+                     })
                     .ConfigureAppConfiguration((context, configurationBuilder) =>
-                    {
-                        string rootPath = context.HostingEnvironment.ContentRootPath;
-                        string environmentName = context.HostingEnvironment.EnvironmentName;
+                     {
+                         string rootPath = context.HostingEnvironment.ContentRootPath;
+                         string environmentName = context.HostingEnvironment.EnvironmentName;
 
-                        configurationBuilder
-                           .SetBasePath(rootPath)
-                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-                           .AddEnvironmentVariables();
+                         configurationBuilder
+                            .SetBasePath(rootPath)
+                            .AddJsonFile("appsettings.json", true, false)
+                            .AddEnvironmentVariables();
 
-                        if (environmentName == "Development")
-                        {
-                            configurationBuilder.AddUserSecrets<GetWeather>();
-                        }
-                    })
+                         if (environmentName == "Development")
+                         {
+                             configurationBuilder.AddUserSecrets<GetWeather>();
+                         }
+                     })
                     .ConfigureServices((context, services) =>
-                    {
-                        services.AddHttpClient<WeatherApiClient>();
-                    })
+                     {
+                         services.AddHttpClient<WeatherApiClient>();
+                     })
                     .Build();
 
         await host.RunAsync();

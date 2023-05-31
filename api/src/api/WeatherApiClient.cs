@@ -6,8 +6,8 @@ namespace api;
 
 public class WeatherApiClient
 {
-    private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
+    private readonly HttpClient _httpClient;
 
     public WeatherApiClient(HttpClient httpClient, IConfiguration configuration)
     {
