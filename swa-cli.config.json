@@ -7,13 +7,15 @@
       "outputLocation": "dist",
       "apiLanguage": "dotnetisolated",
       "apiVersion": "7.0",
-      "appBuildCommand": "npm run build",
+      "appBuildCommand": "yarn run build",
       "apiBuildCommand": "dotnet publish -c Release",
-      "run": "npm run start",
+      "run": "yarn run start",
       "appDevserverUrl": "http://localhost:4200",
       "port": 4000,
       "appName": "swa-dw-demo",
-      "resourceGroup": "dw-swa-demo"
+      "resourceGroup": "dw-swa-demo",
+      "apiPort": 7101,
+      "open": true
     }
   }
 }
